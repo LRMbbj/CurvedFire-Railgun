@@ -18,3 +18,6 @@ A curved-fire railgun model of 14th(2019) NUEDC Test H (for practise)
 51单片机再见！
 下一步就准备完善屏幕了！
 累(。>︿<)_θ
+
+#### #20210202
+HMI真的太方便了！！！串口屏真的神器！！！
