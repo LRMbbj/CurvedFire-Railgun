@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\LCD;..\HARDWARE\UR</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\UR;..\HARDWARE\HMI</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -644,14 +644,14 @@
               <FilePath>..\HARDWARE\PWM\pwm.c</FilePath>
             </File>
             <File>
-              <FileName>lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\LCD\lcd.c</FilePath>
-            </File>
-            <File>
               <FileName>ur.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\UR\ur.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\HMI\hmi.c</FilePath>
             </File>
           </Files>
         </Group>
