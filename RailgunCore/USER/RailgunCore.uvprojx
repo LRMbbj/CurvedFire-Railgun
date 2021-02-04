@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\UR;..\HARDWARE\HMI</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\UR;..\HARDWARE\HMI;..\HARDWARE\RAILGUN</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -652,6 +652,11 @@
               <FileName>hmi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\HMI\hmi.c</FilePath>
+            </File>
+            <File>
+              <FileName>railgun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\RAILGUN\railgun.c</FilePath>
             </File>
           </Files>
         </Group>

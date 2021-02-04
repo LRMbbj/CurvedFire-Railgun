@@ -1,5 +1,8 @@
 #include "hmi.h"
 
+u8 DATA_SIZE = 0;	
+u8 STATE = 0;
+
 void HMI_Init(void)
 {
 	
@@ -29,6 +32,7 @@ void HMI_Init(void)
 	USART_Init( USART3, &USART_InitStruct ); //初始化串口
 	
 	USART_Cmd( USART3, ENABLE );
+	STATE = 0;
 	
 	
 	#if EN_USART3_RX	
@@ -45,15 +49,38 @@ void HMI_Init(void)
 	
 }
 
-u8 GetProgState(void)
+void USART3_puts(char *str)
 {
+	u8 j=0;
+	u16 i=0;
+	while (*(str+j))
+	{
+		USART_SendData(USART3,*(str+j));
+		j++;
+		for(i=0;i<10000;i++);
+	}
+}
 
-	return PROG_STATE;
+void Send_Order(char *obj,char *val)
+{
+	
+	USART3_puts(obj);
+	USART3_puts("\"");
+	USART3_puts(val);
+	USART3_puts("\"\xff\xff\xff");
 	
 }
 
-u8 STATE = 0;
-
+u32 ReadInt(void)
+{
+	
+	while( DATA_SIZE == 4 && STATE == 0 );
+	return USART_RX_BUF[0] + 
+				256 * USART_RX_BUF[1] + 
+				65536 * USART_RX_BUF[2] + 
+				16777216 * USART_RX_BUF[3];
+	
+}
 
 void USART3_IRQHandler(void)                	//串口3中断服务程序
 {
@@ -65,12 +92,25 @@ void USART3_IRQHandler(void)                	//串口3中断服务程序
 		
 		if( (Res == 0x70 || Res == 0x71) && STATE == 0) //是否开始接收
 		{
-			STATE = 1;
+			STATE = Res - 0x70 + 1; //str->1,int->2
 			DATA_SIZE = 0;
 		}
-		else if(STATE == 1) //是否正在接收
+		else if(STATE == 1) //是否正在接收str
 		{
 			if( DATA_SIZE > 1 && USART_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
+			{
+				DATA_SIZE -= 2;
+				STATE = 0; 
+			}//接收完成
+			else //未收到结束位
+			{
+				USART_RX_BUF[ DATA_SIZE ] = Res;
+				DATA_SIZE++;
+			}
+		}
+		else if(STATE == 2) //是否正在接收int
+		{
+			if( DATA_SIZE == 6 && USART_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
 			{
 				DATA_SIZE -= 2;
 				STATE = 0; 

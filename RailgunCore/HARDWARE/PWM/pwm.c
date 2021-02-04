@@ -54,13 +54,13 @@ void PWM_SetAngle(u8 index,u16 angle)
 	if( index == SG_Rotate )
 	{
 		
-		TIM_SetCompare1( TIM3,angle );
+		TIM_SetCompare1( TIM3, (u8)(angle / 0.18f) );
 		
 	}
 	else if( index == SG_Pitch )
 	{
 		
-		TIM_SetCompare2( TIM3,angle );
+		TIM_SetCompare2( TIM3,(u8)(angle / 0.18f) );
 		
 	}
 	

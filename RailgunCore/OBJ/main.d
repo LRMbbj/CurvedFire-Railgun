@@ -40,3 +40,4 @@
 ..\obj\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\main.o: ..\HARDWARE\PWM\pwm.h
 ..\obj\main.o: ..\HARDWARE\UR\ur.h
+..\obj\main.o: ..\HARDWARE\HMI\hmi.h
