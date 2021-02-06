@@ -61,15 +61,26 @@ void USART3_puts(char *str)
 	}
 }
 
-void Send_Order(char *obj,char *val)
+void HMISendOrder(char *obj,char *val)
 {
 	
 	USART3_puts(obj);
-	USART3_puts("\"");
+	USART3_puts("=\"");
 	USART3_puts(val);
 	USART3_puts("\"\xff\xff\xff");
 	
 }
+
+void HMISetValue(char *obj,char *val)
+{
+	
+	USART3_puts(obj);
+	USART3_puts(" ");
+	USART3_puts(val);
+	USART3_puts("\xff\xff\xff");
+	
+}
+
 
 u32 ReadInt(void)
 {
@@ -79,6 +90,16 @@ u32 ReadInt(void)
 				256 * USART_RX_BUF[1] + 
 				65536 * USART_RX_BUF[2] + 
 				16777216 * USART_RX_BUF[3];
+	
+}
+
+void ClearBUF()
+{
+	while( DATA_SIZE > 0 )
+	{
+		DATA_SIZE--;
+		USART_RX_BUF[ DATA_SIZE ] = 0;
+	}
 	
 }
 

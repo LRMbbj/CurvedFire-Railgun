@@ -15,6 +15,8 @@ extern u8 STATE; //接收状态
 void HMI_Init(void); //初始化HMI
 u8 GetProgState(void);
 u32 ReadInt(void);
-void Send_Order( char*, char*);
+void ClearBUF(void);
+void HMISendOrder( char*, char*);
+void HMISetValue( char*, char*);
 
 #endif

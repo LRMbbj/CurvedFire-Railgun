@@ -72,8 +72,8 @@ void BaseAndTest()
 	rAng = ReadInt() % 10000;
 	pAng = ReadInt() % 10000;
 	
-	Send_Order("t2.txt=",int2str(rAng,10));
-	Send_Order("t3.txt=",int2str(pAng,10));
+	HMISetValue("t2.txt",int2str(rAng,10));
+	HMISetValue("t3.txt",int2str(pAng,10));
 	
 	PWM_SetAngle(SG_Rotate, rAng+90 );
 	PWM_SetAngle(SG_Pitch, pAng );
@@ -86,6 +86,12 @@ void BaseAndTest()
 	delay_ms(500);
 	
 	Railgun_Fire();
+	
+	while( !IsEq( USART_RX_BUF, "OD0" )  )
+	{
+		HMISetValue("t5.txt",int2str( UR_Detect() ,10));
+		delay_ms(100);
+	}
 	
 	return;
 	
