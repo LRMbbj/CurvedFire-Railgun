@@ -14,14 +14,16 @@ void Railgun_Init()
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP; //上拉
 	GPIO_Init( GPIOF, &GPIO_InitStruct ); //初始化 PA9 PA10
 	
-		delay_init(168);
+	GPIO_ResetBits (GPIOF, GPIO_Pin_10);//充电
+	
+	delay_init(168);
 }
 void Railgun_Fire()
 {
 	
 	GPIO_SetBits(GPIOF,GPIO_Pin_10);//开启发射
-	delay_ms(1000);
-	GPIO_ResetBits (GPIOF, GPIO_Pin_9);//关闭发射，充电
-	delay_ms(1000);
-	
+	delay_ms(500);
+	GPIO_ResetBits (GPIOF, GPIO_Pin_10);//关闭发射，充电
+	delay_ms(500);
+	//发射步骤需要1s
 }	

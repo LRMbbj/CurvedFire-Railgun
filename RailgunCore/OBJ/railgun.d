@@ -36,3 +36,4 @@
 ..\obj\railgun.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\railgun.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\railgun.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\railgun.o: ..\SYSTEM\delay\delay.h

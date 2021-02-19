@@ -1,5 +1,5 @@
 Dependencies for Project 'RailgunCore', Target 'RailgunCore': (DO NOT MODIFY !)
-F (.\main.c)(0x601C0E81)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x602FC2E7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (..\SYSTEM\sys\sys.h)(0x600D48A6)
 I (..\USER\stm32f4xx.h)(0x600C2DBF)
 I (..\CORE\core_cm4.h)(0x53C7D530)
@@ -40,7 +40,8 @@ I (..\SYSTEM\usart\usart.h)(0x5710F391)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (..\HARDWARE\PWM\pwm.h)(0x600E6DCC)
 I (..\HARDWARE\UR\ur.h)(0x60116929)
-I (..\HARDWARE\HMI\hmi.h)(0x601C0E97)
+I (..\HARDWARE\HMI\hmi.h)(0x601E9ECE)
+I (..\HARDWARE\RAILGUN\railgun.h)(0x601C10D2)
 F (.\stm32f4xx_it.c)(0x600C2CD1)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\stm32f4xx_it.o --omf_browse ..\obj\stm32f4xx_it.crf --depend ..\obj\stm32f4xx_it.d)
 F (.\system_stm32f4xx.c)(0x600C2D5B)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\system_stm32f4xx.o --omf_browse ..\obj\system_stm32f4xx.crf --depend ..\obj\system_stm32f4xx.d)
 I (stm32f4xx.h)(0x600C2DBF)
@@ -1493,8 +1494,8 @@ I (..\FWLIB\inc\stm32f4xx_can.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dac.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dcmi.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_fsmc.h)(0x53DBAFAD)
-F (..\HARDWARE\HMI\hmi.c)(0x601C0F7F)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\hmi.o --omf_browse ..\obj\hmi.crf --depend ..\obj\hmi.d)
-I (..\HARDWARE\HMI\hmi.h)(0x601C0E97)
+F (..\HARDWARE\HMI\hmi.c)(0x601E9EED)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\hmi.o --omf_browse ..\obj\hmi.crf --depend ..\obj\hmi.d)
+I (..\HARDWARE\HMI\hmi.h)(0x601E9ECE)
 I (..\SYSTEM\sys\sys.h)(0x600D48A6)
 I (..\USER\stm32f4xx.h)(0x600C2DBF)
 I (..\CORE\core_cm4.h)(0x53C7D530)
@@ -1530,8 +1531,8 @@ I (..\FWLIB\inc\stm32f4xx_can.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dac.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dcmi.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_fsmc.h)(0x53DBAFAD)
-F (..\HARDWARE\RAILGUN\railgun.c)(0x601C0BB7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\railgun.o --omf_browse ..\obj\railgun.crf --depend ..\obj\railgun.d)
-I (..\HARDWARE\RAILGUN\railgun.h)(0x601C0EA2)
+F (..\HARDWARE\RAILGUN\railgun.c)(0x602FC296)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I..\USER -I..\CORE -I..\FWLIB\inc -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\HARDWARE\PWM -I..\HARDWARE\UR -I..\HARDWARE\HMI -I..\HARDWARE\RAILGUN-I D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE-I D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-I D:\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F40_41xxx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\railgun.o --omf_browse ..\obj\railgun.crf --depend ..\obj\railgun.d)
+I (..\HARDWARE\RAILGUN\railgun.h)(0x601C10D2)
 I (..\SYSTEM\sys\sys.h)(0x600D48A6)
 I (..\USER\stm32f4xx.h)(0x600C2DBF)
 I (..\CORE\core_cm4.h)(0x53C7D530)
@@ -1567,3 +1568,4 @@ I (..\FWLIB\inc\stm32f4xx_can.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dac.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_dcmi.h)(0x53DBAFAD)
 I (..\FWLIB\inc\stm32f4xx_fsmc.h)(0x53DBAFAD)
+I (..\SYSTEM\delay\delay.h)(0x5710F353)

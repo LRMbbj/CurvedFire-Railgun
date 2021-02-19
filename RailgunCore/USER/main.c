@@ -78,7 +78,7 @@ void BaseAndTest()
 	PWM_SetAngle(SG_Rotate, rAng+90 );
 	PWM_SetAngle(SG_Pitch, pAng );
 	
-	//发射！缺少发射函数
+	Railgun_Fire();//发射！
 	
 	PWM_SetAngle(SG_Rotate, 90 );
 	PWM_SetAngle(SG_Pitch, 0 );//复位
@@ -100,7 +100,17 @@ void BaseAndTest()
 void ExtentA()
 {
 	
-	USART_RX_BUF[0] = 0;
+	USART_RX_BUF[0] = 0;//复位HMI缓冲
+	
+	//复位电磁炮到R=-30 P=0
+	//发送开始指令给OpenMV
+	//主循环（对正时结束）
+			//迭代偏转角
+			//延迟一定时间
+	//此处退出循环
+	//打开测距并测量距离
+	//将数据输入发射函数
+	
 	return;
 	
 }
@@ -109,6 +119,24 @@ void ExtentB()
 {
 	
 	USART_RX_BUF[0] = 0;
+	
+	//复位电磁炮到R=-30 P=0
+	//发送开始指令给OpenMV
+	//循环1（对正时结束）
+			//迭代偏转角
+			//延迟一定时间
+	//此处退出循环1
+	//打开测距并测量距离
+	//循环2（对正时结束）
+			//迭代偏转角
+			//延迟一定时间
+	//此处退出循环2
+	//数据输入发射函数(动态)
+	//循环3（接收到结束指令后结束）
+			//迭代偏转角
+			//延迟一定时间
+	//双零复位
+	
 	return;
 	
 }
@@ -121,6 +149,7 @@ int main(void)
 	delay_init(168);
 	uart_init(115200);
 	Railgun_Init();
+	UR_Init();
 	PWM_Init();
 	HMI_Init();
 	

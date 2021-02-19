@@ -41,3 +41,4 @@
 ..\obj\main.o: ..\HARDWARE\PWM\pwm.h
 ..\obj\main.o: ..\HARDWARE\UR\ur.h
 ..\obj\main.o: ..\HARDWARE\HMI\hmi.h
+..\obj\main.o: ..\HARDWARE\RAILGUN\railgun.h
