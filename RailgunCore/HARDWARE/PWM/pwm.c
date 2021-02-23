@@ -46,7 +46,7 @@ void PWM_Init(void)
 	
 }
 
-void PWM_SetAngle(u8 index,u16 angle)
+void PWM_SetAngle(u8 index,s16 angle) //0=>0¶È 1000=>180¶È
 {
 	
 	assert_param(IS_SG_CODE(index));
@@ -54,13 +54,13 @@ void PWM_SetAngle(u8 index,u16 angle)
 	if( index == SG_Rotate )
 	{
 		
-		TIM_SetCompare1( TIM3, (u8)(angle / 0.18f) );
+		TIM_SetCompare1( TIM3, (u16)(angle + 750) );
 		
 	}
 	else if( index == SG_Pitch )
 	{
 		
-		TIM_SetCompare2( TIM3,(u8)(angle / 0.18f) );
+		TIM_SetCompare2( TIM3,(u16)(angle + 250) );
 		
 	}
 	

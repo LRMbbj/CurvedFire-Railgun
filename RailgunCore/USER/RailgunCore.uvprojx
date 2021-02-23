@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\UR;..\HARDWARE\HMI;..\HARDWARE\RAILGUN</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\FWLIB\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\HARDWARE\PWM;..\HARDWARE\UR;..\HARDWARE\HMI;..\HARDWARE\RAILGUN;..\HARDWARE\OPENMV</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -657,6 +657,11 @@
               <FileName>railgun.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\RAILGUN\railgun.c</FilePath>
+            </File>
+            <File>
+              <FileName>openmv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\OPENMV\openmv.c</FilePath>
             </File>
           </Files>
         </Group>

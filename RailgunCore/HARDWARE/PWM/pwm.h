@@ -10,7 +10,7 @@
                                        ((STATE) == SG_Pitch))
 
 void PWM_Init(void); //初始化PWM和舵机
-void PWM_SetAngle(u8 index,u16 angle); //设置舵机角度
+void PWM_SetAngle(u8 index,s16 angle); //设置舵机角度
 
 
 #endif

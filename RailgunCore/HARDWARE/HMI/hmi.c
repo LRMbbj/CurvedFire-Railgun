@@ -2,6 +2,7 @@
 
 u8 DATA_SIZE = 0;	
 u8 STATE = 0;
+u8 USART3_RX_BUF[USART_REC_LEN];
 
 void HMI_Init(void)
 {
@@ -86,10 +87,10 @@ u32 ReadInt(void)
 {
 	
 	while( DATA_SIZE == 4 && STATE == 0 );
-	return USART_RX_BUF[0] + 
-				256 * USART_RX_BUF[1] + 
-				65536 * USART_RX_BUF[2] + 
-				16777216 * USART_RX_BUF[3];
+	return USART3_RX_BUF[0] + 
+				256 * USART3_RX_BUF[1] + 
+				65536 * USART3_RX_BUF[2] + 
+				16777216 * USART3_RX_BUF[3];
 	
 }
 
@@ -98,7 +99,7 @@ void ClearBUF()
 	while( DATA_SIZE > 0 )
 	{
 		DATA_SIZE--;
-		USART_RX_BUF[ DATA_SIZE ] = 0;
+		USART3_RX_BUF[ DATA_SIZE ] = 0;
 	}
 	
 }
@@ -118,27 +119,27 @@ void USART3_IRQHandler(void)                	//串口3中断服务程序
 		}
 		else if(STATE == 1) //是否正在接收str
 		{
-			if( DATA_SIZE > 1 && USART_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
+			if( DATA_SIZE > 1 && USART3_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART3_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
 			{
 				DATA_SIZE -= 2;
 				STATE = 0; 
 			}//接收完成
 			else //未收到结束位
 			{
-				USART_RX_BUF[ DATA_SIZE ] = Res;
+				USART3_RX_BUF[ DATA_SIZE ] = Res;
 				DATA_SIZE++;
 			}
 		}
 		else if(STATE == 2) //是否正在接收int
 		{
-			if( DATA_SIZE == 6 && USART_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
+			if( DATA_SIZE == 6 && USART3_RX_BUF[ DATA_SIZE - 1 ] == 0xff && USART3_RX_BUF[ DATA_SIZE - 2 ] == 0xff && Res == 0xff) //是否收到结束位
 			{
 				DATA_SIZE -= 2;
 				STATE = 0; 
 			}//接收完成
 			else //未收到结束位
 			{
-				USART_RX_BUF[ DATA_SIZE ] = Res;
+				USART3_RX_BUF[ DATA_SIZE ] = Res;
 				DATA_SIZE++;
 			}
 		}
