@@ -21,3 +21,6 @@ A curved-fire railgun model of 14th(2019) NUEDC Test H (for practise)
 
 #### #20210202
 HMI真的太方便了！！！串口屏真的神器！！！
+
+#### #20210224
+更新的测试
