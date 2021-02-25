@@ -23,7 +23,7 @@ void HMI_Init(void)
 	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP; //上拉
 	GPIO_Init( GPIOB, &GPIO_InitStruct ); //初始化 PA9 PA10
 	
-	USART_InitStruct.USART_BaudRate = 9600; //波特率
+	USART_InitStruct.USART_BaudRate = 115200; //波特率
 	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; //硬件控制
 	USART_InitStruct.USART_Mode = USART_Mode_Rx | USART_Mode_Tx; //收发使能
 	USART_InitStruct.USART_Parity = USART_Parity_No; //奇偶校验

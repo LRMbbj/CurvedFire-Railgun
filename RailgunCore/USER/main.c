@@ -8,7 +8,7 @@
 #include "openmv.h"
 
 
-extern s16 rAng,pAng;
+s16 rAng,pAng;
 
 u8 IsEq( u8 *pBUF, char *s ) //判断是否相等，使用通配符'*'
 {
@@ -111,12 +111,14 @@ void ExtentA()
 	OPENMV_State(ENABLE);//发送开始指令给OpenMV
 	for(rAng = -167;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
 	{
-			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			PWM_SetAngle(SG_Rotate, rAng );
 			delay_ms(9);//延迟一定时间
 	}//此处退出循环
 	rAng = 0;// !!!缺失 测量目标角度函数
 	
+	PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
 	dis = UR_Detect();//打开测距并测量距离
+	
 	pAng = dis;//!!!缺失 换算发射仰角
 	PWM_SetAngle(SG_Pitch, pAng );
 	
@@ -130,26 +132,57 @@ void ExtentA()
 
 void ExtentB()
 {
-	
+	s16 target;
 	ClearBUF();
 	
-	//复位电磁炮到R=-30 P=0
-	//发送开始指令给OpenMV
-	//循环1（对正时结束）
-			//迭代偏转角
-			//延迟一定时间
-	//此处退出循环1
-	//打开测距并测量距离
-	//循环2（对正时结束）
-			//迭代偏转角
-			//延迟一定时间
-	//此处退出循环2
-	//数据输入发射函数(动态)
-	//循环3（接收到结束指令后结束）
-			//迭代偏转角
-			//延迟一定时间
-	//双零复位
+	rAng = -167;
+	pAng = 0;
+	PWM_SetAngle(SG_Rotate, rAng );
+	PWM_SetAngle(SG_Pitch, pAng ); //复位电磁炮到R=-30 P=0
+	OPENMV_State(ENABLE); //发送开始指令给OpenMV
 	
+	//循环1 -30->30->-30
+	for(rAng = -167;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			delay_ms(9);//延迟一定时间
+	}
+	for(rAng = 167;rAng >= -167;rAng--)//主循环（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			delay_ms(9);//延迟一定时间
+	}
+	
+	target = 0;//!!缺少 判断目标位
+	
+	
+	for(rAng = -167;rAng <= target;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			delay_ms(9);//延迟一定时间
+	}//循环2 -30->目标位
+	
+	GPIO_SetBits(GPIOF,GPIO_Pin_10);//手动发射
+	
+	for(rAng = target;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			delay_ms(9);//延迟一定时间
+	}
+	for(rAng = 167;rAng >= 0;rAng--)//主循环（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+			delay_ms(9);//延迟一定时间
+	}//循环3 目标位->30->0
+	
+	
+	rAng = 0;
+	pAng = 0;
+	PWM_SetAngle(SG_Rotate, rAng );
+	PWM_SetAngle(SG_Pitch, pAng ); //双零复位
+	
+	
+	GPIO_ResetBits(GPIOF,GPIO_Pin_10);//复位发射
 	return;
 	
 }
@@ -166,8 +199,20 @@ int main(void)
 	PWM_Init();
 	HMI_Init();
 	
+	rAng = 0;
+	pAng = 0;
 	PWM_SetAngle(SG_Rotate, 0 );
 	PWM_SetAngle(SG_Pitch, 0 );//复位
+	
+	rAng = 0;
+	while(1)
+	{
+		PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+		delay_ms(9);//延迟一定时间
+		rAng++;
+		rAng %= 167;
+		//此处退出循环
+	}
 	
 	while(1)
 	{
