@@ -1,13 +1,11 @@
-#include "sys.h"
 #include "delay.h"
-#include "usart.h"
 #include "pwm.h"
 #include "ur.h"
 #include "hmi.h"
 #include "railgun.h"
 #include "openmv.h"
 
-
+char str[5];
 s16 rAng,pAng;
 
 u8 IsEq( u8 *pBUF, char *s ) //判断是否相等，使用通配符'*'
@@ -19,65 +17,40 @@ u8 IsEq( u8 *pBUF, char *s ) //判断是否相等，使用通配符'*'
 	return 1;
 }
 
-char *int2str(int value, int radix)//整数转字符串
+char *int2str(u16 value)//整数转字符串
 {
-		char		*string = "";
-    int     i, d;
-    int     flag = 0;
-    char    *ptr = string;
- 
-    /* This implementation only works for decimal numbers. */
-    if (radix != 10)
-    {
-        *ptr = 0;
-        return string;
-    }
- 
-    if (!value)
-    {
-        *ptr++ = 0x30;
-        *ptr = 0;
-        return string;
-    }
- 
-    /* if this is a negative value insert the minus sign. */
-    if (value < 0)
-    {
-        *ptr++ = '-';
- 
-        /* Make the value positive. */
-        value *= -1;
-    }
- 
-    for (i = 10000; i > 0; i /= 10)
-    {
-        d = value / i;
- 
-        if (d || flag)
-        {
-            *ptr++ = (char)(d + 0x30);
-            value -= (d * i);
-            flag = 1;
-        }
-    }
- 
-    /* Null terminate the string. */
-    *ptr = 0;
- 
-    return string;
- 
+
+	u16 val = value;
+	u16 i = 1000,j = 0;
+	for (j = 0; j < 5; j++)
+	{
+		str[j] = '\0';
+	}
+	j = 0;
+	while (j < 4 && i > 0)
+	{
+		str[j] = val / i + 48;
+		val %= i;
+		j++;
+		i /= 10;
+	}
+	
+	return (char*)str;
+
 }
 
 
 void BaseAndTest()
 {
+	u16 dis = 0;
 	ClearBUF();//复位HMI缓冲
 	while( !IsEq( USART3_RX_BUF, "DT2" ) );
+	ClearBUF();
 	rAng = ReadInt() % 10000; // 零度中位
 	pAng = ReadInt() % 10000;
 	
-	HMISetValue("t2.txt",int2str(rAng,10));
-	HMISetValue("t3.txt",int2str(pAng,10));
+	HMISetValue("t2.txt",int2str(rAng));
+	HMISetValue("t3.txt",int2str(pAng));
 	
 	PWM_SetAngle(SG_Rotate, rAng );
 	PWM_SetAngle(SG_Pitch, pAng );
@@ -93,7 +66,9 @@ void BaseAndTest()
 	
 	while( !IsEq( USART3_RX_BUF, "OD0" )  )
 	{
-		HMISetValue("t5.txt",int2str( UR_Detect() ,10));
+		dis = 0;
+		dis = UR_Detect();
+		if( dis != 0 ) HMISetValue("t5.txt",int2str( dis ));
 		delay_ms(100);
 	}
 	
@@ -104,27 +79,53 @@ void BaseAndTest()
 void ExtentA()
 {
 	u16 dis;
+	s8 tt =0;
 	ClearBUF();//复位HMI缓冲
 	
-	rAng = -167;
-	PWM_SetAngle(SG_Rotate, rAng );//复位电磁炮到R=-30 P=0
-	OPENMV_State(ENABLE);//发送开始指令给OpenMV
-	for(rAng = -167;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
-	{
-			PWM_SetAngle(SG_Rotate, rAng );
-			delay_ms(9);//延迟一定时间
-	}//此处退出循环
-	rAng = 0;// !!!缺失 测量目标角度函数
+//	rAng = -222;
+//	PWM_SetAngle(SG_Rotate, rAng );//复位电磁炮到R=-30 P=0
 	
-	PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
+	OPENMV_State(ENABLE);//发送开始指令给OpenMV
+	
+//	for(rAng = -222;rAng <= 221;rAng+=6)//主循环1（扫过整个目标区域）迭代偏转角
+//	{
+//			PWM_SetAngle(SG_Rotate, rAng );
+//			delay_ms(40);//延迟一定时间
+//	}//此处退出循环
+//	for(rAng = 221;rAng >= -222;rAng-=6)//主循环1（扫过整个目标区域）迭代偏转角
+//	{
+//			PWM_SetAngle(SG_Rotate, rAng );
+//			delay_ms(40);//延迟一定时间
+//	}//此处退出循环
+	
+	rAng = 0;
+	PWM_SetAngle(SG_Rotate, rAng );
+	delay_ms(500);
+	while(GetBias()>3||GetBias()<-3)
+	{
+		tt=GetBias();
+		if(tt<-120) continue;
+		rAng += GetBias()/10%20;
+		PWM_SetAngle(SG_Rotate, rAng );
+		delay_ms(50);
+		tt=GetBias();
+	}
+	HMISetValue("t3.txt",int2str(rAng));
+	OPENMV_State(DISABLE);//发送结束指令给OpenMV
+	
+	//PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
 	dis = UR_Detect();//打开测距并测量距离
 	
-	pAng = dis;//!!!缺失 换算发射仰角
+	pAng = 100;//!!!缺失 换算发射仰角
 	PWM_SetAngle(SG_Pitch, pAng );
 	
 	Railgun_Fire();//发射
-	PWM_SetAngle(SG_Rotate, 0 );
+	//PWM_SetAngle(SG_Rotate, 0 );
 	PWM_SetAngle(SG_Pitch, 0 );//复位
+	
+	OPENMV_State(ENABLE);//发送开始指令给OpenMV
+	while( !IsEq( USART3_RX_BUF, "OD0" )  );
+	OPENMV_State(DISABLE);//发送结束始指令给OpenMV
 	
 	return;
 	
@@ -135,44 +136,47 @@ void ExtentB()
 	s16 target;
 	ClearBUF();
 	
-	rAng = -167;
+	rAng = -222;
 	pAng = 0;
 	PWM_SetAngle(SG_Rotate, rAng );
 	PWM_SetAngle(SG_Pitch, pAng ); //复位电磁炮到R=-30 P=0
 	OPENMV_State(ENABLE); //发送开始指令给OpenMV
 	
 	//循环1 -30->30->-30
-	for(rAng = -167;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	for(rAng = -222;rAng <= 221;rAng+=3)//主循环1（扫过整个目标区域）迭代偏转角
 	{
-			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-			delay_ms(9);//延迟一定时间
-	}
-	for(rAng = 167;rAng >= -167;rAng--)//主循环（扫过整个目标区域）迭代偏转角
+			PWM_SetAngle(SG_Rotate, rAng );
+			delay_ms(30);//延迟一定时间
+	}//此处退出循环
+	for(rAng = 221;rAng >= -222;rAng-=3)//主循环1（扫过整个目标区域）迭代偏转角
 	{
-			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-			delay_ms(9);//延迟一定时间
-	}
+			PWM_SetAngle(SG_Rotate, rAng );
+			delay_ms(20);//延迟一定时间
+	}//此处退出循环
+
+	target = GetBias();//测量目标角度函数
+	OPENMV_State(DISABLE);//发送结束指令给OpenMV	
 	
-	target = 0;//!!缺少 判断目标位
-	
-	
-	for(rAng = -167;rAng <= target;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	for(rAng = -222;rAng < target;rAng+=3)//主循环1（扫过整个目标区域）迭代偏转角
 	{
-			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-			delay_ms(9);//延迟一定时间
-	}//循环2 -30->目标位
+			PWM_SetAngle(SG_Rotate, rAng );
+			delay_ms(20);//延迟一定时间
+	}//此处退出循环
+	
+	PWM_SetAngle(SG_Rotate, target );
 	
 	GPIO_SetBits(GPIOF,GPIO_Pin_10);//手动发射
 	
-	for(rAng = target;rAng <= 167;rAng++)//主循环（扫过整个目标区域）迭代偏转角
+	for(rAng = target;rAng <= 221;rAng+=3)//主循环1（扫过整个目标区域）迭代偏转角
+	{
+			PWM_SetAngle(SG_Rotate, rAng );
+			delay_ms(20);//延迟一定时间
+	}//此处退出循环
+
+	for(rAng = 221;rAng >= -222;rAng-=3)//主循环（扫过整个目标区域）迭代偏转角
 	{
 			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-			delay_ms(9);//延迟一定时间
-	}
-	for(rAng = 167;rAng >= 0;rAng--)//主循环（扫过整个目标区域）迭代偏转角
-	{
-			PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-			delay_ms(9);//延迟一定时间
+			delay_ms(20);//延迟一定时间
 	}//循环3 目标位->30->0
 	
 	
@@ -193,27 +197,18 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置系统中断优先级分组 2
 	
 	delay_init(168);
-	uart_init(19200);
 	Railgun_Init();
 	UR_Init();
 	PWM_Init();
 	HMI_Init();
+	OPENMV_Init();
+	
+	delay_ms(1000);
 	
 	rAng = 0;
 	pAng = 0;
 	PWM_SetAngle(SG_Rotate, 0 );
 	PWM_SetAngle(SG_Pitch, 0 );//复位
-	
-	rAng = 0;
-	while(1)
-	{
-		PWM_SetAngle(SG_Rotate, rAng );//动作到目标位置
-		delay_ms(9);//延迟一定时间
-		rAng++;
-		rAng %= 167;
-		//此处退出循环
-	}
-	
 	while(1)
 	{
 		if(USART3_RX_BUF[0] == 'O' && USART3_RX_BUF[1] == 'D') //ODx跳转到不同模式

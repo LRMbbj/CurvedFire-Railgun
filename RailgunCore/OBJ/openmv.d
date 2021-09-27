@@ -1,5 +1,6 @@
 ..\obj\openmv.o: ..\HARDWARE\OPENMV\openmv.c
 ..\obj\openmv.o: ..\HARDWARE\OPENMV\openmv.h
+..\obj\openmv.o: ..\SYSTEM\delay\delay.h
 ..\obj\openmv.o: ..\SYSTEM\sys\sys.h
 ..\obj\openmv.o: ..\USER\stm32f4xx.h
 ..\obj\openmv.o: ..\CORE\core_cm4.h

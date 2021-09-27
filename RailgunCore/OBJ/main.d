@@ -1,4 +1,5 @@
 ..\obj\main.o: main.c
+..\obj\main.o: ..\SYSTEM\delay\delay.h
 ..\obj\main.o: ..\SYSTEM\sys\sys.h
 ..\obj\main.o: ..\USER\stm32f4xx.h
 ..\obj\main.o: ..\CORE\core_cm4.h
@@ -35,9 +36,6 @@
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\main.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
-..\obj\main.o: ..\SYSTEM\delay\delay.h
-..\obj\main.o: ..\SYSTEM\usart\usart.h
-..\obj\main.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\main.o: ..\HARDWARE\PWM\pwm.h
 ..\obj\main.o: ..\HARDWARE\UR\ur.h
 ..\obj\main.o: ..\HARDWARE\HMI\hmi.h

@@ -54,6 +54,6 @@ while(True):
         max_circle = None
         max_circle = find_maxc(red_circles)
         if max_circle!=None:
-        uart.write( "C\r\n" )
+            uart.write( "C\r\n" )
             print("In Center")
         print("FPS %f" % clock.fps())

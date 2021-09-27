@@ -1,10 +1,14 @@
 #include "ur.h"
+#include "delay.h"
+
+u8 USART2_RX_BUF_H, USART2_RX_BUF_L, FLAG;
 
 void UR_Init(void)
 {
 	
 	GPIO_InitTypeDef GPIO_InitStruct;
 	USART_InitTypeDef USART_InitStruct;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
 	RCC_APB1PeriphClockCmd( RCC_APB1Periph_USART2, ENABLE );
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
@@ -30,23 +34,48 @@ void UR_Init(void)
 	
 	USART_Cmd( USART2, ENABLE );
 	
+	
+	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);//开启相关中断
+	
+	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;//串口2中断通道
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;//抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =3;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
+	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器
+	
 }
 
 u16 UR_Detect(void)
 {
-	
-	u16 data = 0;
+	u16 i = 0;
+	FLAG = 0;
+	USART2_RX_BUF_H = 0;
+	USART2_RX_BUF_L = 0;
 
 	USART_SendData( USART2, 0x55 );
 	
-	while( USART_GetITStatus( USART2, USART_IT_RXNE ) != RESET );
-	
-	data = USART_ReceiveData( USART2 ) << 8; //读取高八位
-	
-	while( USART_GetITStatus( USART2, USART_IT_RXNE ) != RESET );
-	
-	data += USART_ReceiveData( USART2 ); //读取低八位
-	
-	return data;
+	delay_ms(250);
 
+	i = USART2_RX_BUF_H * 256 + USART2_RX_BUF_L;
+	if(i>10000) i = 0;
+	return i;
+
+}
+
+void USART2_IRQHandler() 
+{
+	if(USART_GetITStatus(USART2,USART_IT_RXNE) != RESET) //中断产生 
+ 	{
+		USART_ClearITPendingBit(USART2,USART_IT_RXNE); //清除中断标志
+		if(FLAG == 0)
+		{
+			USART2_RX_BUF_H = USART_ReceiveData(USART2);     //接收串口2数据到buff缓冲区
+			FLAG = 1;
+		}
+		else if(FLAG == 1)
+		{
+			USART2_RX_BUF_L = USART_ReceiveData(USART2);
+			FLAG = 2;
+		}
+	}
 }

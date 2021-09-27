@@ -1,18 +1,19 @@
 #ifndef __HMI__
 #define __HMI__
 
+#include "uart.h"
 
-#include "sys.h"
+#define u8 uint8_t
+#define u32 uint32_t
 
-
-#define USART_REC_LEN  			200  	//¶¨Òå×î´ó½ÓÊÕ×Ö½ÚÊı 200
-#define EN_USART1_RX 			1		//Ê¹ÄÜ£¨1£©/½ûÖ¹£¨0£©´®¿Ú1½ÓÊÕ
+#define USART_REC_LEN  			200  	//å®šä¹‰æœ€å¤§æ¥æ”¶å­—èŠ‚æ•° 200
+#define EN_USART1_RX 			1		//ä½¿èƒ½ï¼ˆ1ï¼‰/ç¦æ­¢ï¼ˆ0ï¼‰ä¸²å£1æ¥æ”¶
 	  	
-extern u8 USART3_RX_BUF[USART_REC_LEN]; //½ÓÊÕ»º³å,×î´óUSART_REC_LEN¸ö×Ö½Ú.Ä©×Ö½ÚÎª»»ĞĞ·û 
-extern u8 DATA_SIZE;         		//½ÓÊÕ´óĞ¡	
-extern u8 STATE; //½ÓÊÕ×´Ì¬
+extern u8 USART3_RX_BUF[USART_REC_LEN]; //æ¥æ”¶ç¼“å†²,æœ€å¤§USART_REC_LENä¸ªå­—èŠ‚.æœ«å­—èŠ‚ä¸ºæ¢è¡Œç¬¦ 
+extern u8 DATA_SIZE;         		//æ¥æ”¶å¤§å°	
+extern u8 STATE; //æ¥æ”¶çŠ¶æ€
 
-void HMI_Init(void); //³õÊ¼»¯HMI
+void HMI_Init(void); //åˆå§‹åŒ–HMI
 u8 GetProgState(void);
 u32 ReadInt(void);
 void ClearBUF(void);

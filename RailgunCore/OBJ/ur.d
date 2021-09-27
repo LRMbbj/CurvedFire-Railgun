@@ -36,3 +36,4 @@
 ..\obj\ur.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\ur.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\ur.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\ur.o: ..\SYSTEM\delay\delay.h

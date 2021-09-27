@@ -17,29 +17,29 @@ Library Manager: ArmAr.exe V5.05 update 1 (build 106)
 Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
 CPU DLL:         SARMCM3.DLL V5.14.0.0
 Dialog DLL:      DCM.DLL V1.13.1.0
-Target DLL:      UL2CM3.DLL V1.155.0.0
+Target DLL:      Segger\JL2CM3.dll V2.99.13.0
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RailgunCore.uvprojx
-Project File Date:  02/23/2021
+Project File Date:  03/27/2021
 
 <h2>Output:</h2>
 Build target 'RailgunCore'
 compiling main.c...
-main.c(159): warning:  #223-D: function "GPIO_PinRemapConfig" declared implicitly
-        GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE);
-main.c(159): error:  #20: identifier "GPIO_Remap_SWJ_JTAGDisable" is undefined
-        GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE);
-main.c: 1 warning, 1 error
-"..\OBJ\RailgunCore.axf" - 1 Error(s), 1 Warning(s).
+main.c(81): warning:  #550-D: variable "dis" was set but never used
+        u16 dis;
+main.c: 1 warning, 0 errors
+linking...
+Program Size: Code=5672 RO-data=424 RW-data=48 ZI-data=1888  
+FromELF: creating hex file...
+"..\OBJ\RailgunCore.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\CodeLibrary\CurvedFire-Railgun\RailgunCore\USER\RTE
   D:\MDK5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
 </pre>
 </body>
 </html>

@@ -40,7 +40,6 @@
 "..\obj\stm32f4xx_wwdg.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
-"..\obj\usart.o"
 "..\obj\pwm.o"
 "..\obj\ur.o"
 "..\obj\hmi.o"

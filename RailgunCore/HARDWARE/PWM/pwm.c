@@ -18,22 +18,22 @@ void PWM_Init(void)
 	GPIO_InitStruct.GPIO_Speed = GPIO_High_Speed;
 	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP; //构建GPIO初始化结构体
 	
-	GPIO_Init( GPIOF, &GPIO_InitStruct); //初始化GPIO
+	GPIO_Init( GPIOC, &GPIO_InitStruct); //初始化GPIO
 	
-	GPIO_PinAFConfig( GPIOF, GPIO_PinSource6, GPIO_AF_TIM3);
-	GPIO_PinAFConfig( GPIOF, GPIO_PinSource7, GPIO_AF_TIM3); //复用IO设置
+	GPIO_PinAFConfig( GPIOC, GPIO_PinSource6, GPIO_AF_TIM3);
+	GPIO_PinAFConfig( GPIOC, GPIO_PinSource7, GPIO_AF_TIM3); //复用IO设置
 	
 	
-	TIMInitStruct.TIM_Period = 9999;
-	TIMInitStruct.TIM_Prescaler = 167; //计数10000为20ms(可以调整精度)
+	TIMInitStruct.TIM_Period = 19999;
+	TIMInitStruct.TIM_Prescaler = 83; //计数2000为20ms(可以调整精度)
 	TIMInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
-	TIMInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIMInitStruct.TIM_ClockDivision = 0;
 	TIM_TimeBaseInit( TIM3, &TIMInitStruct );
 	
 	TIMOCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
 	TIMOCInitStruct.TIM_OutputState = TIM_OutputState_Enable;
 	TIMOCInitStruct.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIMOCInitStruct.TIM_Pulse = 750; // 250=>0.5ms=>0度 1250=>2.5ms=>180度
+	TIMOCInitStruct.TIM_Pulse = 999; // 499=>0.5ms=>0度 1999=>1.5ms=>180度
 	TIM_OC1Init( TIM3, &TIMOCInitStruct );
 	TIM_OC2Init( TIM3, &TIMOCInitStruct );
 	
@@ -54,13 +54,13 @@ void PWM_SetAngle(u8 index,s16 angle) //0=>0度 1000=>180度
 	if( index == SG_Rotate )
 	{
 		
-		TIM_SetCompare1( TIM3, (u16)(angle + 750) );
+		TIM_SetCompare1( TIM3, (u16)(-angle + 999 ) );
 		
 	}
 	else if( index == SG_Pitch )
 	{
 		
-		TIM_SetCompare2( TIM3,(u16)(angle + 250) );
+		TIM_SetCompare2( TIM3,(u16)(angle + 529) );
 		
 	}
 	
